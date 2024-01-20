@@ -7,14 +7,12 @@ using namespace std;
 
 void addStudent(Node* &, Node*, Node*, Node*);
 void printList(Node*, Node*);
-void deleteStudent(Node*, Node*, Node*);
+void deleteStudent(Node*, Node*, Node*, int);
 void averageGPA(Node*, float, int);
 
 int main() {
   Node* head = NULL;
   bool playing = true;
-  float total = 0;
-  int count = 0;
 
   while (playing == true){
   cout << "type in a command" << endl;
@@ -59,10 +57,15 @@ int main() {
   }
 
      if (strcmp(command, "DELETE") == 0){
-    deleteStudent(head, head, head);
+       cout << "type the ID of the student you want to delete" << endl;
+       int deleteID;
+       cin >> deleteID;
+       deleteStudent(head, head, head, deleteID);
   }
 
      if (strcmp(command, "AVERAGE") == 0){
+       int total = 0;
+       int count = 0;
        averageGPA(head, total, count);
      }
     
@@ -96,7 +99,7 @@ void printList(Node* head, Node* current){
 
 
 
-void deleteStudent(Node* head, Node* current, Node* previous){
+void deleteStudent(Node* head, Node* current, Node* previous, int findId){
 
   //cout << "enter the id of the student you want to delete" << endl;
   //int findId;
@@ -108,10 +111,6 @@ void deleteStudent(Node* head, Node* current, Node* previous){
   }
 
   else if (head != NULL){
-    cout << "enter the id o the student you want to delete" << endl;
-    int findId;
-    cin >> findId;
-    cin.ignore(80, '\n');
     while (current != NULL){
       cout << "inside while loop" << endl;
     if ((current->getStudent())->getID() != findId){
@@ -119,7 +118,7 @@ void deleteStudent(Node* head, Node* current, Node* previous){
       previous = current;
       if (current->getNext() != NULL){
       current = current->getNext();
-      deleteStudent(head, current, previous);
+      deleteStudent(head, current, previous, findId);
       }
       else if (current->getNext()== NULL){
 	cout << "reached end of list and didn't find the student" << endl;
@@ -221,11 +220,11 @@ void averageGPA(Node* current, float total, int count){
     
     float tempgpa = current->getStudent()->getGPA();
     total = total + tempgpa;
-      cout << "total has been updated" << endl;
+    //cout << "total has been updated" << endl;
       count++;
-      cout << "count has been updated" << endl;
+      //cout << "count has been updated" << endl;
       current = current->getNext();
-      cout << "current has been updated" << endl;
+      //cout << "current has been updated" << endl;
       averageGPA(current, total, count);
     }
     
